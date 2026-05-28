@@ -23,9 +23,6 @@ MonoBehaviour:
   - m_enabled: 1
     m_path: Assets/Scenes/GAME in Play.unity
     m_guid: 761ec33a925556ced91a62ed1bb59d5d
-  - m_enabled: 1
-    m_path: Assets/Scenes/MENU.unity
-    m_guid: 8c9cfa26abfee488c85f1582747f6a02
   m_HasScriptingDefines: 0
   m_ScriptingDefines: []
   m_PlayerSettingsYaml:
@@ -711,11 +708,12 @@ MonoBehaviour:
     - line: '|   captureStartupLogs: {}'
     - line: '|   activeInputHandler: 2'
     - line: '|   windowsGamepadBackendHint: 0'
-    - line: '|   cloudProjectId: '
+    - line: '|   enableDirectStorage: 0'
+    - line: '|   cloudProjectId: 13f524e2-8ca2-4a22-86f5-c7e8a1a751ed'
     - line: '|   framebufferDepthMemorylessMode: 0'
     - line: '|   qualitySettingsNames: []'
-    - line: '|   projectName: '
-    - line: '|   organizationId: '
+    - line: '|   projectName: Coin Eater'
+    - line: '|   organizationId: slender57'
     - line: '|   cloudEnabled: 0'
     - line: '|   legacyClampBlendShapeWeights: 0'
     - line: '|   hmiLoadingImage: {instanceID: 0}'
@@ -731,6 +729,8 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
     - rid: 546786522632290379
       type: {class: LinuxPlatformSettings, ns: UnityEditor.LinuxStandalone, asm: UnityEditor.LinuxStandalone.Extensions}
       data:
