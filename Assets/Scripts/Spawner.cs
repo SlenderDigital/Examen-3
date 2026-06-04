@@ -8,6 +8,11 @@ public class Spawner : MonoBehaviour
     public float initialSpawnInterval = 1.5f;
     public float difficultyIncreaseRate = 0.05f;
     public float initialGravity = 5f;
+    
+    [Header("Bomb Probability")]
+    public float initialBombProbability = 0.3f;
+    public float maxBombProbability = 0.8f;
+    public float bombProbabilityIncreaseRate = 0.01f;
 
     private float timer;
     private float currentSpawnInterval;
@@ -36,7 +41,8 @@ public class Spawner : MonoBehaviour
         float randomX = Random.Range(-spawnRangeX, spawnRangeX);
         Vector3 spawnPos = new Vector3(randomX, 3.5f, 0f);
 
-        bool isBomb = Random.value > 0.7f;
+        float currentBombProbability = Mathf.Min(maxBombProbability, initialBombProbability + (elapsedTime * bombProbabilityIncreaseRate));
+        bool isBomb = Random.value < currentBombProbability;
         GameObject prefab = isBomb ? bombPrefab : coinPrefab;
 
         GameObject newItem = Instantiate(prefab, spawnPos, Quaternion.identity, null);

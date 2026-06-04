@@ -6,8 +6,15 @@ public class UIManager : MonoBehaviour
 {
     public TextMeshProUGUI scoreText;
     public Slider healthSlider;
-    public GameObject gameOverPanel;
-    public TextMeshProUGUI resultText;
+    public TextMeshProUGUI pauseButtonText;
+
+    public void UpdatePauseText(bool isPaused)
+    {
+        if (pauseButtonText != null)
+        {
+            pauseButtonText.text = isPaused ? "Continuar" : "Pausar";
+        }
+    }
 
     public void UpdateUI(int score, int health)
     {
@@ -19,15 +26,6 @@ public class UIManager : MonoBehaviour
         if (healthSlider != null)
         {
             healthSlider.value = health;
-        }
-    }
-
-    public void ShowGameOver(bool won)
-    {
-        if (gameOverPanel != null)
-        {
-            gameOverPanel.SetActive(true);
-            resultText.text = won ? "You Win!" : "Game Over!";
         }
     }
 }

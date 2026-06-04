@@ -67,6 +67,6 @@
         "*.sln": "*.csproj",
         "*.slnx": "*.csproj"
     },
-    "dotnet.defaultSolution": "Examen-3.slnx",
+    "dotnet.defaultSolution": "Coin Eater.slnx",
     "dotnet.enableWorkspaceBasedDevelopment": false
 }
