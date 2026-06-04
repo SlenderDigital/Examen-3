@@ -10,21 +10,17 @@ public class Item : MonoBehaviour
 
     void Start()
     {
-        // Force Z-alignment for 2D collisions
         transform.position = new Vector3(transform.position.x, transform.position.y, 0f);
 
-        // Ensure the collider is a trigger
         Collider2D col = GetComponent<Collider2D>();
         col.isTrigger = true;
 
-        // Configure Rigidbody2D
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         rb.bodyType = RigidbodyType2D.Kinematic;
         rb.gravityScale = 0f;
         rb.simulated = true;
         rb.useFullKinematicContacts = true;
 
-        // Scale objects: Bombs are larger than coins
         if (type == ItemType.Bomb)
             transform.localScale = new Vector3(1.4f, 1.4f, 1f);
         else
@@ -41,11 +37,8 @@ public class Item : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log(gameObject.name + " triggered by: " + other.gameObject.name);
-
         if (other.CompareTag("Player") || other.GetComponent<PlayerController>() != null)
         {
-            Debug.Log("Collision confirmed with Player!");
             GameManager instance = GameManager.instance;
             if (instance != null)
             {

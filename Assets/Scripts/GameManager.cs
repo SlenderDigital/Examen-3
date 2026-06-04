@@ -11,6 +11,10 @@ public class GameManager : MonoBehaviour
     public int health = 5;
     public int targetScore = 5;
     public bool isGameOver = false;
+    [Header("Scenes")]
+    public string menuSceneName = "MENU";
+    public string defeatSceneName = "DEFEAT";
+
     public float winDelay = 3f;
 
     private UIManager uiManager;
@@ -33,16 +37,14 @@ public class GameManager : MonoBehaviour
     {
         uiManager = FindFirstObjectByType<UIManager>();
 
-        // Set target score to beat the current best
         string raw = PlayerPrefs.GetString("ScoreHistory", "");
         if (raw.Length > 0)
         {
             string[] entries = raw.Split(',');
             if (int.TryParse(entries[0], out int bestScore))
             {
-                // Fixed progression: 25 → 35 → 45 → 50 → 55 → 60 → ...
                 int[] tiers = { 25, 35, 45, 50 };
-                targetScore = 25; // fallback
+                targetScore = 25; 
 
                 if (bestScore >= 50)
                 {
@@ -61,7 +63,6 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
-        // If no history exists, targetScore keeps its Inspector default
 
         if (uiManager != null)
             uiManager.UpdateUI(score, health);
@@ -96,19 +97,19 @@ public class GameManager : MonoBehaviour
     void WinGame()
     {
         isGameOver = true;
-        StartCoroutine(ReturnToMenuAfterDelay(winDelay));
+        StartCoroutine(LoadEndSceneAfterDelay(menuSceneName, winDelay));
     }
 
-    IEnumerator ReturnToMenuAfterDelay(float delay)
+    IEnumerator LoadEndSceneAfterDelay(string sceneName, float delay)
     {
         yield return new WaitForSeconds(delay);
-        ReturnToMenu();
+        LoadEndScene(sceneName);
     }
 
     void LoseGame()
     {
         isGameOver = true;
-        ReturnToMenu();
+        LoadEndScene(defeatSceneName);
     }
 
     public void RestartGame()
@@ -121,12 +122,19 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         SaveScoreToHistory(score);
-        SceneManager.LoadScene("MENU");
+        SceneManager.LoadScene(menuSceneName);
     }
 
-    // Stores up to 10 scores as a comma-separated string in PlayerPrefs
+    public void LoadEndScene(string sceneName)
+    {
+        Time.timeScale = 1f;
+        SaveScoreToHistory(score);
+        SceneManager.LoadScene(sceneName);
+    }
+
     public static void SaveScoreToHistory(int newScore)
     {
+        PlayerPrefs.SetInt("JustScored", newScore);
         string raw = PlayerPrefs.GetString("ScoreHistory", "");
         System.Collections.Generic.List<string> entries =
             new System.Collections.Generic.List<string>(
@@ -134,7 +142,7 @@ public class GameManager : MonoBehaviour
 
         entries.Add(newScore.ToString());
         entries.Sort((a, b) => int.Parse(b).CompareTo(int.Parse(a)));
-        if (entries.Count > 5) entries.RemoveRange(5, entries.Count - 5);
+        if (entries.Count > 3) entries.RemoveRange(3, entries.Count - 3);
 
         PlayerPrefs.SetString("ScoreHistory", string.Join(",", entries));
         PlayerPrefs.Save();
