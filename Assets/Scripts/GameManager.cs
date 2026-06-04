@@ -75,6 +75,11 @@ public class GameManager : MonoBehaviour
         score += value;
         if (uiManager != null) uiManager.UpdateUI(score, health);
 
+        if (SoundManager.instance != null)
+        {
+            SoundManager.instance.PlayCoinSound();
+        }
+
         if (score >= targetScore)
         {
             WinGame();
@@ -87,6 +92,11 @@ public class GameManager : MonoBehaviour
 
         health -= value;
         if (uiManager != null) uiManager.UpdateUI(score, health);
+
+        if (SoundManager.instance != null)
+        {
+            SoundManager.instance.PlayDamageSound();
+        }
 
         if (health <= 0)
         {

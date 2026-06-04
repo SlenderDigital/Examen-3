@@ -7,9 +7,9 @@ public class PlayerController : MonoBehaviour
 {
     [Header("World Movement Settings")]
     public float speed = 10f;
-    public float xRange = 8f;
-
+    
     private Rigidbody2D rb;
+    private float xRange;
 
     void Start()
     {
@@ -23,6 +23,33 @@ public class PlayerController : MonoBehaviour
         if (transform.localScale == Vector3.zero)
         {
             transform.localScale = Vector3.one;
+        }
+
+        CalculateScreenLimits();
+    }
+
+    void CalculateScreenLimits()
+    {
+        if (Camera.main != null)
+        {
+            float playerWidth = 0f;
+            SpriteRenderer sr = GetComponent<SpriteRenderer>();
+            if (sr != null)
+            {
+                playerWidth = sr.bounds.extents.x;
+            }
+            else
+            {
+                playerWidth = transform.localScale.x / 2f;
+            }
+
+            float screenAspect = (float)Screen.width / Screen.height;
+            float cameraHeight = Camera.main.orthographicSize;
+            xRange = (cameraHeight * screenAspect) - playerWidth;
+        }
+        else
+        {
+            xRange = 8f;
         }
     }
 
