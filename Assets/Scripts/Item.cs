@@ -24,9 +24,11 @@ public class Item : MonoBehaviour
         rb.simulated = true;
         rb.useFullKinematicContacts = true;
 
-        // Ensure scale is not zero
-        if (transform.localScale == Vector3.zero)
-            transform.localScale = Vector3.one;
+        // Scale objects: Bombs are larger than coins
+        if (type == ItemType.Bomb)
+            transform.localScale = new Vector3(1.4f, 1.4f, 1f);
+        else
+            transform.localScale = new Vector3(1f, 1f, 1f);
     }
 
     void Update()
