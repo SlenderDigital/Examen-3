@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[RequireComponent(typeof(AudioSource))]
 public class SoundManager : MonoBehaviour
 {
     public static SoundManager instance;
@@ -18,6 +19,7 @@ public class SoundManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
+            return;
         }
 
         if (effectsSource == null)
@@ -28,6 +30,8 @@ public class SoundManager : MonoBehaviour
 
     public void PlayCoinSound()
     {
+        if (effectsSource == null) effectsSource = GetComponent<AudioSource>();
+        
         if (effectsSource != null && coinSound != null)
         {
             effectsSource.PlayOneShot(coinSound);
@@ -36,6 +40,8 @@ public class SoundManager : MonoBehaviour
 
     public void PlayDamageSound()
     {
+        if (effectsSource == null) effectsSource = GetComponent<AudioSource>();
+
         if (effectsSource != null && damageSound != null)
         {
             effectsSource.PlayOneShot(damageSound);
