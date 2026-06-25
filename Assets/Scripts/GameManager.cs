@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
 
     public int score = 0;
-    public int health = 5;
+    private int health = 5;
     public int targetScore = 5;
     public bool isGameOver = false;
     [Header("Scenes")]
